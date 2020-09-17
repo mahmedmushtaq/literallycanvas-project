@@ -1,0 +1,116 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+
+  height: 2000px;
+}
+.paint-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs-container {
+  width: 70vw;
+  margin: 50px;
+  display: flex;
+}
+
+.literally {
+  width: 100%;
+  height: 100%;
+}
+
+.literally img.background,
+.literally > canvas {
+  /* position: absolute; */
+}
+
+.toolset {
+  margin: 1rem;
+}
+
+.tool {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-radius: 0.25rem;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+}
+
+.tool.current {
+  color: #fff;
+  padding-top: 20px;
+  padding-bottom: 11px;
+  background: hsla(199, 26%, 44%, 1);
+}
+
+.tool:hover {
+  text-decoration: underline;
+  /* padding: 20px 20px 3px 20px;
+  background: hsla(199, 26%, 44%, 0.75); */
+}
+
+.toolLabel {
+  font-size: 1.25rem;
+}
+
+#tools-sizes.disabled {
+  pointer-events: none;
+}
+
+#tools-sizes.disabled .tool:after {
+  content: ' ';
+  background: hsla(0, 100%, 100%, 0.75);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.25rem;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.tool-icon {
+  width: 20px;
+}
+
+#download button {
+  background-color: transparent;
+  border: none;
+}
+
+#download button:hover {
+  cursor: pointer;
+}
+
+#download button:focus {
+  outline: none;
+}
+
+label {
+  cursor: pointer;
+  /* Style as you please, it will become the visible UI component. */
+}
+
+/* #upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+} */
+
+.inner-tool-div {
+  display: flex;
+  align-items: center;
+}

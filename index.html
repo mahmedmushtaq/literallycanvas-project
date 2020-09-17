@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Literally Canvas</title>
+    <link href="./statics/lib/css/literallycanvas.css" rel="stylesheet" />
+    <link href="./assets/css/index.css" rel="stylesheet" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+    />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <script src="https://unpkg.com/konva@7.1.2/konva.min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <div class="paint-container">
+        <div class="flex-container">
+          <div class="toolset flex-container-column">
+            <div><span class="toolLabel">Tools:</span></div>
+
+            <!-- contain pencil and eraser tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="tool-pencil">
+                <img class="tool-icon" src="./assets/images/pen.svg" alt="" />
+              </a>
+              <a href="javascript:void(0);" class="tool" id="tool-eraser">
+                <img class="tool-icon" src="./assets/images/clean.svg" alt="" />
+              </a>
+            </div>
+
+            <!-- contain line and arrow tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="tool-line">
+                <img class="tool-icon" src="./assets/images/line.svg" alt="" />
+              </a>
+              <a href="javascript:void(0);" class="tool" id="tool-arrow">
+                <img class="tool-icon" src="./assets/images/arrow.svg" alt="" />
+              </a>
+            </div>
+
+            <!-- contain text and dashed line tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="tool-text">
+                <img class="tool-icon" src="./assets/images/text.svg" alt="" />
+              </a>
+
+              <a href="javascript:void(0);" class="tool" id="tool-dashed">
+                <img
+                  class="tool-icon"
+                  src="./assets/images/dashed-line.svg"
+                  alt=""
+                />
+              </a>
+            </div>
+
+            <!-- contain ellipse and rectange tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="tool-ellipse">
+                <img class="tool-icon" src="./assets/images/ellipse.svg" alt="" />
+              </a>
+              <a href="javascript:void(0);" class="tool" id="tool-rectangle">
+                <img class="tool-icon" src="./assets/images/rectangle.svg" alt="" />
+              </a>
+            </div>
+
+            <!-- contain polygon and pan tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="tool-polygon">
+                <img class="tool-icon" src="./assets/images/polygon.svg" alt="" />
+              </a>
+              <a href="javascript:void(0);" class="tool" id="tool-pan">
+                <img class="tool-icon" src="./assets/images/pan.png" alt="" />
+              </a>
+            </div>
+
+            <!-- contain undo and redo tool -->
+
+            <div class="inner-tool-div">
+              <br />
+              <a href="javascript:void(0);" class="tool" id="undo-lc">
+                <img class="tool-icon" src="./assets/images/undo.svg" alt="" />
+              </a>
+              <a href="javascript:void(0);" class="tool" id="redo-lc">
+                <img class="tool-icon" src="./assets/images/redo.svg" alt="" />
+              </a>
+            </div>
+
+            <!-- contain open image in new tab and upload photo tool -->
+
+            <div style="display: flex" class="inner-tool-div">
+              <br />
+
+              <a href="javascript:void(0);" class="tool" id="open-image">
+                <img class="tool-icon" src="./assets/images/open.png" alt="" />
+              </a>
+
+              <a href="#ex1" rel="modal:open" style="margin-left: 10px">
+                <img class="tool-icon" src="./assets/images/image.svg" alt="" />
+              </a>
+              
+            </div>
+
+            <!-- contain clear and save tool -->
+
+            <div class="inner-tool-div">
+              <br />
+
+              <a href="javascript:void(0);" class="tool" id="clear-lc">
+                <img class="tool-icon" src="./assets/images/clear.svg" alt="" />
+              </a>
+
+              <a id="download" download="image.png" style="margin-left: 3px"
+                ><button type="button" onClick="download()">
+                  <img
+                    class="tool-icon"
+                    src="./assets/images/save.svg"
+                    alt=""
+                  /></button
+              ></a>
+            </div>
+
+            <!-- ends tools div -->
+          </div>
+
+          <!-- canvas container -->
+
+          <div class="fs-container">
+            <div class="literally"></div>
+          </div>
+
+          <!-- canvas ends here -->
+        </div>
+
+  </div>
+
+
+
+    <!-- Modal HTML embedded directly into document -->
+    <div id="ex1" class="modal">
+      <div>
+        <label for="upload-photo">Select photo</label>
+        <br />
+        <input type="file" name="photo" id="upload-photo" accept="image/*" />
+        <br />
+      </div>
+      <br />
+      <a
+        href="#"
+        id="add-img-btn"
+        rel="modal:close"
+        style="text-decoration: none"
+      >
+        <button>Add Image</button>
+      </a>
+
+     <!--   rel="modal:close" -->
+    </a>
+
+      <div id="container"></div>
+    </div>
+
+  </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="./assets/js/image-resize.js"></script>
+    <script src="./statics/lib/js/literallycanvas-core.js"></script>
+
+    <script src="./assets/js/custom-literally.js" defer></script>
+  </body>
+</html>

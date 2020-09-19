@@ -25,11 +25,16 @@ function download() {
 }
 
 var showLC = function () {
+  const storageData = JSON.parse(localStorage.getItem("drawing"));
+  storageData.colors.background = 'white';
+
   lc = LC.init(containerOne, {
-    snapshot: JSON.parse(localStorage.getItem('drawing')),
+    snapshot: storageData,
     defaultStrokeWidth: 10,
     strokeWidths: [10, 20, 50],
+    backgroundColor:'white',
     secondaryColor: 'transparent',
+
   });
   window.demoLC = lc;
 
@@ -37,11 +42,11 @@ var showLC = function () {
     if (imgObj.src) {
       // hide anchors
       hideAnchors();
-     
+
       stage.attrs.width = yodaImg.attrs.width + 150;
       stage.attrs.height = yodaImg.attrs.height + 150;
 
-     
+
 
       const dataUrl = stage.toDataURL();
       const image = new Image();
@@ -56,7 +61,7 @@ var showLC = function () {
     }
   });
 
- 
+
   var save = function () {
     localStorage.setItem('drawing', JSON.stringify(lc.getSnapshot()));
   };
@@ -260,5 +265,7 @@ $('#show-lc').click(function () {
     showLC();
   }
 });
+
+
 
 // methods

@@ -5426,22 +5426,27 @@
           module.exports = SelectShape = (function (superClass) {
             extend(SelectShape, superClass);
 
+
+
             SelectShape.prototype.name = 'SelectShape';
 
             SelectShape.prototype.usesSimpleAPI = false;
 
             function SelectShape(lc) {
+
               this.selectCanvas = document.createElement('canvas');
               this.selectCanvas.style['background-color'] = 'transparent';
               this.selectCtx = this.selectCanvas.getContext('2d');
             }
 
             SelectShape.prototype.didBecomeActive = function (lc) {
+
               var onDown, onDrag, onUp, selectShapeUnsubscribeFuncs;
               selectShapeUnsubscribeFuncs = [];
               this._selectShapeUnsubscribe = (function (_this) {
                 return function () {
                   var func, j, len, results;
+
                   results = [];
                   for (
                     j = 0, len = selectShapeUnsubscribeFuncs.length;
@@ -5453,8 +5458,12 @@
                   }
                   return results;
                 };
+
+
+
               })(this);
               onDown = (function (_this) {
+
                 return function (arg) {
                   var br, shapeIndex, x, y;
                   (x = arg.x), (y = arg.y);
@@ -5486,15 +5495,20 @@
                 };
               })(this);
               onDrag = (function (_this) {
+
                 return function (arg) {
+
                   var x, y;
                   (x = arg.x), (y = arg.y);
+
                   if (_this.selectedShape != null) {
                     _this.didDrag = true;
                     _this.selectedShape.setUpperLeft({
                       x: x - _this.dragOffset.x,
                       y: y - _this.dragOffset.y,
                     });
+
+                    console.log();
                     lc.setShapesInProgress([
                       _this.selectedShape,
                       createShape('SelectionBox', {
@@ -5517,6 +5531,7 @@
                       x: br.x,
                       y: br.y,
                     };
+
                     lc.execute(
                       new actions.MoveAction(
                         lc,
@@ -5549,6 +5564,7 @@
               var shapes;
               this.selectCanvas.width = lc.canvas.width;
               this.selectCanvas.height = lc.canvas.height;
+
               this.selectCtx.clearRect(
                 0,
                 0,
@@ -5577,6 +5593,7 @@
               var p, pixel;
               p = lc.drawingCoordsToClientCoords(x, y);
               pixel = ctx.getImageData(p.x, p.y, 1, 1).data;
+
               if (pixel[3]) {
                 return parseInt(
                   this._rgbToHex(pixel[0], pixel[1], pixel[2]),

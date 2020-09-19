@@ -114,24 +114,38 @@
               
             </div>
 
-            <!-- contain clear and save tool -->
+            <!-- contain select and save tool -->
 
             <div class="inner-tool-div">
               <br />
+
+           
+              <a href="javascript:void(0);" class="tool" id="tool-select">
+                <img class="tool-icon" src="./assets/images/select.svg" alt="" />
+              </a>
 
               <a href="javascript:void(0);" class="tool" id="clear-lc">
                 <img class="tool-icon" src="./assets/images/clear.svg" alt="" />
               </a>
 
-              <a id="download" download="image.png" style="margin-left: 3px"
-                ><button type="button" onClick="download()">
-                  <img
-                    class="tool-icon"
-                    src="./assets/images/save.svg"
-                    alt=""
-                  /></button
-              ></a>
+             
             </div>
+
+            <div>
+              <br>
+
+              <a id="download" download="image.png" style="margin-left: 3px"
+              ><button type="button" onClick="download()">
+                <img
+                  class="tool-icon"
+                  src="./assets/images/save.svg"
+                  alt=""
+                /></button
+            ></a>
+             
+            </div>
+
+           
 
             <!-- ends tools div -->
           </div>
@@ -173,6 +187,23 @@
       <div id="container"></div>
     </div>
 
+
+
+
+
+ 
+
+  <div
+  id="canvas-container"
+  style="
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+    overflow: auto;
+  "
+></div>
+
+
   </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -181,5 +212,7 @@
     <script src="./statics/lib/js/literallycanvas-core.js"></script>
 
     <script src="./assets/js/custom-literally.js" defer></script>
+
+   
   </body>
 </html>

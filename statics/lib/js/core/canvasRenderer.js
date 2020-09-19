@@ -1,19 +1,29 @@
-var _drawRawLinePath, defineCanvasRenderer, drawErasedLinePath, drawErasedLinePathLatest, drawLinePath, drawLinePathLatest, lineEndCapShapes, noop, renderShapeToCanvas, renderShapeToContext, renderers;
+var _drawRawLinePath,
+  defineCanvasRenderer,
+  drawErasedLinePath,
+  drawErasedLinePathLatest,
+  drawLinePath,
+  drawLinePathLatest,
+  lineEndCapShapes,
+  noop,
+  renderShapeToCanvas,
+  renderShapeToContext,
+  renderers;
 
 lineEndCapShapes = require('./lineEndCapShapes');
 
 renderers = {};
 
-defineCanvasRenderer = function(shapeName, drawFunc, drawLatestFunc) {
-  return renderers[shapeName] = {
+defineCanvasRenderer = function (shapeName, drawFunc, drawLatestFunc) {
+  return (renderers[shapeName] = {
     drawFunc: drawFunc,
-    drawLatestFunc: drawLatestFunc
-  };
+    drawLatestFunc: drawLatestFunc,
+  });
 };
 
-noop = function() {};
+noop = function () {};
 
-renderShapeToContext = function(ctx, shape, opts) {
+renderShapeToContext = function (ctx, shape, opts) {
   var bufferCtx;
   if (opts == null) {
     opts = {};
@@ -32,23 +42,37 @@ renderShapeToContext = function(ctx, shape, opts) {
   }
   bufferCtx = opts.bufferCtx;
   if (renderers[shape.className]) {
-    if (opts.shouldOnlyDrawLatest && renderers[shape.className].drawLatestFunc) {
-      return renderers[shape.className].drawLatestFunc(ctx, bufferCtx, shape, opts.retryCallback);
+    if (
+      opts.shouldOnlyDrawLatest &&
+      renderers[shape.className].drawLatestFunc
+    ) {
+      return renderers[shape.className].drawLatestFunc(
+        ctx,
+        bufferCtx,
+        shape,
+        opts.retryCallback
+      );
     } else {
-      return renderers[shape.className].drawFunc(ctx, shape, opts.retryCallback);
+      return renderers[shape.className].drawFunc(
+        ctx,
+        shape,
+        opts.retryCallback
+      );
     }
   } else if (opts.shouldIgnoreUnsupportedShapes) {
-    return console.warn("Can't render shape of type " + shape.className + " to canvas");
+    return console.warn(
+      "Can't render shape of type " + shape.className + ' to canvas'
+    );
   } else {
-    throw "Can't render shape of type " + shape.className + " to canvas";
+    throw "Can't render shape of type " + shape.className + ' to canvas';
   }
 };
 
-renderShapeToCanvas = function(canvas, shape, opts) {
+renderShapeToCanvas = function (canvas, shape, opts) {
   return renderShapeToContext(canvas.getContext('2d'), shape, opts);
 };
 
-defineCanvasRenderer('Rectangle', function(ctx, shape) {
+defineCanvasRenderer('Rectangle', function (ctx, shape) {
   var x, y;
   x = shape.x;
   y = shape.y;
@@ -63,7 +87,7 @@ defineCanvasRenderer('Rectangle', function(ctx, shape) {
   return ctx.strokeRect(x, y, shape.width, shape.height);
 });
 
-defineCanvasRenderer('Ellipse', function(ctx, shape) {
+defineCanvasRenderer('Ellipse', function (ctx, shape) {
   var centerX, centerY, halfHeight, halfWidth;
   ctx.save();
   halfWidth = Math.floor(shape.width / 2);
@@ -83,49 +107,68 @@ defineCanvasRenderer('Ellipse', function(ctx, shape) {
   return ctx.stroke();
 });
 
-defineCanvasRenderer('SelectionBox', (function() {
-  var _drawHandle;
-  _drawHandle = function(ctx, arg, handleSize) {
-    var x, y;
-    x = arg.x, y = arg.y;
-    if (handleSize === 0) {
-      return;
-    }
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(x, y, handleSize, handleSize);
-    ctx.strokeStyle = '#000';
-    return ctx.strokeRect(x, y, handleSize, handleSize);
-  };
-  return function(ctx, shape) {
-    _drawHandle(ctx, shape.getTopLeftHandleRect(), shape.handleSize);
-    _drawHandle(ctx, shape.getTopRightHandleRect(), shape.handleSize);
-    _drawHandle(ctx, shape.getBottomLeftHandleRect(), shape.handleSize);
-    _drawHandle(ctx, shape.getBottomRightHandleRect(), shape.handleSize);
-    if (shape.backgroundColor) {
-      ctx.fillStyle = shape.backgroundColor;
-      ctx.fillRect(shape._br.x - shape.margin, shape._br.y - shape.margin, shape._br.width + shape.margin * 2, shape._br.height + shape.margin * 2);
-    }
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#000';
-    ctx.setLineDash([2, 4]);
-    ctx.strokeRect(shape._br.x - shape.margin, shape._br.y - shape.margin, shape._br.width + shape.margin * 2, shape._br.height + shape.margin * 2);
-    return ctx.setLineDash([]);
-  };
-})());
+defineCanvasRenderer(
+  'SelectionBox',
+  (function () {
+    var _drawHandle;
+    _drawHandle = function (ctx, arg, handleSize) {
+      var x, y;
+      (x = arg.x), (y = arg.y);
+      if (handleSize === 0) {
+        return;
+      }
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(x, y, handleSize, handleSize);
+      ctx.strokeStyle = '#000';
+      return ctx.strokeRect(x, y, handleSize, handleSize);
+    };
+    return function (ctx, shape) {
+      _drawHandle(ctx, shape.getTopLeftHandleRect(), shape.handleSize);
+      _drawHandle(ctx, shape.getTopRightHandleRect(), shape.handleSize);
+      _drawHandle(ctx, shape.getBottomLeftHandleRect(), shape.handleSize);
+      _drawHandle(ctx, shape.getBottomRightHandleRect(), shape.handleSize);
+      if (shape.backgroundColor) {
+        ctx.fillStyle = shape.backgroundColor;
+        ctx.fillRect(
+          shape._br.x - shape.margin,
+          shape._br.y - shape.margin,
+          shape._br.width + shape.margin * 2,
+          shape._br.height + shape.margin * 2
+        );
+      }
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#000';
+      ctx.setLineDash([2, 4]);
+      ctx.strokeRect(
+        shape._br.x - shape.margin,
+        shape._br.y - shape.margin,
+        shape._br.width + shape.margin * 2,
+        shape._br.height + shape.margin * 2
+      );
+      return ctx.setLineDash([]);
+    };
+  })()
+);
 
-defineCanvasRenderer('Image', function(ctx, shape, retryCallback) {
+defineCanvasRenderer('Image', function (ctx, shape, retryCallback) {
   if (shape.image.width) {
     if (shape.scale === 1) {
       return ctx.drawImage(shape.image, shape.x, shape.y);
     } else {
-      return ctx.drawImage(shape.image, shape.x, shape.y, shape.image.width * shape.scale, shape.image.height * shape.scale);
+      return ctx.drawImage(
+        shape.image,
+        shape.x,
+        shape.y,
+        shape.image.width * shape.scale,
+        shape.image.height * shape.scale
+      );
     }
   } else if (retryCallback) {
-    return shape.image.onload = retryCallback;
+    return (shape.image.onload = retryCallback);
   }
 });
 
-defineCanvasRenderer('Line', function(ctx, shape) {
+defineCanvasRenderer('Line', function (ctx, shape) {
   var arrowWidth, x1, x2, y1, y2;
   if (shape.x1 === shape.x2 && shape.y1 === shape.y2) {
     return;
@@ -155,14 +198,28 @@ defineCanvasRenderer('Line', function(ctx, shape) {
   }
   arrowWidth = Math.max(shape.strokeWidth * 2.2, 5);
   if (shape.endCapShapes[0]) {
-    lineEndCapShapes[shape.endCapShapes[0]].drawToCanvas(ctx, x1, y1, Math.atan2(y1 - y2, x1 - x2), arrowWidth, shape.color);
+    lineEndCapShapes[shape.endCapShapes[0]].drawToCanvas(
+      ctx,
+      x1,
+      y1,
+      Math.atan2(y1 - y2, x1 - x2),
+      arrowWidth,
+      shape.color
+    );
   }
   if (shape.endCapShapes[1]) {
-    return lineEndCapShapes[shape.endCapShapes[1]].drawToCanvas(ctx, x2, y2, Math.atan2(y2 - y1, x2 - x1), arrowWidth, shape.color);
+    return lineEndCapShapes[shape.endCapShapes[1]].drawToCanvas(
+      ctx,
+      x2,
+      y2,
+      Math.atan2(y2 - y1, x2 - x1),
+      arrowWidth,
+      shape.color
+    );
   }
 });
 
-_drawRawLinePath = function(ctx, points, close, lineCap) {
+_drawRawLinePath = function (ctx, points, close, lineCap) {
   var i, len, point, ref;
   if (close == null) {
     close = false;
@@ -196,15 +253,16 @@ _drawRawLinePath = function(ctx, points, close, lineCap) {
   }
 };
 
-drawLinePath = function(ctx, shape) {
+drawLinePath = function (ctx, shape) {
   _drawRawLinePath(ctx, shape.smoothedPoints);
   return ctx.stroke();
 };
 
-drawLinePathLatest = function(ctx, bufferCtx, shape) {
+drawLinePathLatest = function (ctx, bufferCtx, shape) {
   var drawEnd, drawStart, segmentStart;
   if (shape.tail) {
-    segmentStart = shape.smoothedPoints.length - shape.segmentSize * shape.tailSize;
+    segmentStart =
+      shape.smoothedPoints.length - shape.segmentSize * shape.tailSize;
     drawStart = segmentStart < shape.segmentSize * 2 ? 0 : segmentStart;
     drawEnd = segmentStart + shape.segmentSize + 1;
     _drawRawLinePath(bufferCtx, shape.smoothedPoints.slice(drawStart, drawEnd));
@@ -217,26 +275,30 @@ drawLinePathLatest = function(ctx, bufferCtx, shape) {
 
 defineCanvasRenderer('LinePath', drawLinePath, drawLinePathLatest);
 
-drawErasedLinePath = function(ctx, shape) {
+drawErasedLinePath = function (ctx, shape) {
   ctx.save();
-  ctx.globalCompositeOperation = "destination-out";
+  ctx.globalCompositeOperation = 'destination-out';
   drawLinePath(ctx, shape);
   return ctx.restore();
 };
 
-drawErasedLinePathLatest = function(ctx, bufferCtx, shape) {
+drawErasedLinePathLatest = function (ctx, bufferCtx, shape) {
   ctx.save();
-  ctx.globalCompositeOperation = "destination-out";
+  ctx.globalCompositeOperation = 'destination-out';
   bufferCtx.save();
-  bufferCtx.globalCompositeOperation = "destination-out";
+  bufferCtx.globalCompositeOperation = 'destination-out';
   drawLinePathLatest(ctx, bufferCtx, shape);
   ctx.restore();
   return bufferCtx.restore();
 };
 
-defineCanvasRenderer('ErasedLinePath', drawErasedLinePath, drawErasedLinePathLatest);
+defineCanvasRenderer(
+  'ErasedLinePath',
+  drawErasedLinePath,
+  drawErasedLinePathLatest
+);
 
-defineCanvasRenderer('Text', function(ctx, shape) {
+defineCanvasRenderer('Text', function (ctx, shape) {
   if (!shape.renderer) {
     shape._makeRenderer(ctx);
   }
@@ -244,7 +306,7 @@ defineCanvasRenderer('Text', function(ctx, shape) {
   return shape.renderer.draw(ctx, shape.x, shape.y);
 });
 
-defineCanvasRenderer('Polygon', function(ctx, shape) {
+defineCanvasRenderer('Polygon', function (ctx, shape) {
   ctx.fillStyle = shape.fillColor;
   _drawRawLinePath(ctx, shape.points, shape.isClosed, 'butt');
   ctx.fill();
@@ -254,5 +316,5 @@ defineCanvasRenderer('Polygon', function(ctx, shape) {
 module.exports = {
   defineCanvasRenderer: defineCanvasRenderer,
   renderShapeToCanvas: renderShapeToCanvas,
-  renderShapeToContext: renderShapeToContext
+  renderShapeToContext: renderShapeToContext,
 };

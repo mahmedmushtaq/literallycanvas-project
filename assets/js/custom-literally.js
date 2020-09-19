@@ -37,44 +37,26 @@ var showLC = function () {
     if (imgObj.src) {
       // hide anchors
       hideAnchors();
-      const canvas = $('.konvajs-content canvas')[0];
-      const dataUrl = canvas.toDataURL();
-      var image = new Image();
-      image.onload = function () {
-        ctx.drawImage(image, 0, 0);
-      };
+     
+      stage.attrs.width = yodaImg.attrs.width + 150;
+      stage.attrs.height = yodaImg.attrs.height + 150;
+
+     
+
+      const dataUrl = stage.toDataURL();
+      const image = new Image();
+
       image.src = dataUrl;
+
       lc.saveShape(
-        LC.createShape('Image', { x: 0, y: 0, image: image, scale: 1 })
+        LC.createShape('Image', { x: 20, y: 20, image: image, scale: 1 })
       );
+
       showAnchors();
     }
   });
 
-  // lc.respondToSizeChange();
-  //   var newImage = new Image();
-  //   newImage.src = './assets/images/clean.svg';
-
-  // $('#upload-photo').change(function (event) {
-  //   const addImage = new Image();
-
-  //   const url = URL.createObjectURL(event.target.files[0]);
-  //   if (url) {
-  //     addImage.src = url;
-  //     addImage.id = 'add_image';
-
-  //     // const xDraggables = xElem.drag();
-
-  //     // LC.util.addImageOnload(addImage, function (img) {
-  //     //   lc.saveShape(
-  //     //     LC.createShape('Image', { x: 0, y: 0, image: addImage, scale: 0.5 })
-  //     //   );
-  //     // });
-
-  //     //
-  //   }
-  // });
-
+ 
   var save = function () {
     localStorage.setItem('drawing', JSON.stringify(lc.getSnapshot()));
   };

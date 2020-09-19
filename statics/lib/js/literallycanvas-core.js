@@ -6171,3 +6171,14 @@
     [18]
   )(18);
 });
+
+// draggable Image functions
+function _Go(context, canvas) {
+  _MouseEvents();
+
+  setInterval(function () {
+    _DrawImage(context);
+  }, 1000 / 30);
+}
+
+function _DrawImage() {}

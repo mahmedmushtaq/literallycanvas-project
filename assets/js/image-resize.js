@@ -97,13 +97,10 @@ var stage = new Konva.Stage({
 var layer = new Konva.Layer();
 stage.add(layer);
 
-
 var yodaImg = new Konva.Image({
   width: 93,
   height: 104,
 });
-
-
 
 var yodaGroup = new Konva.Group({
   x: 20,
@@ -111,6 +108,7 @@ var yodaGroup = new Konva.Group({
   draggable: true,
 });
 layer.add(yodaGroup);
+
 yodaGroup.add(yodaImg);
 addAnchor(yodaGroup, 0, 0, 'topLeft');
 addAnchor(yodaGroup, 93, 0, 'topRight');
@@ -129,7 +127,6 @@ function hideAnchors() {
 
 yodaGroup.on('mouseenter', showAnchors);
 yodaGroup.on('mouseleave', hideAnchors);
-
 
 var imgObj = new Image();
 imgObj.onload = function () {

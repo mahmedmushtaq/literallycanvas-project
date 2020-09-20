@@ -25,18 +25,19 @@ function download() {
 }
 
 var showLC = function () {
-  const storageData = JSON.parse(localStorage.getItem("drawing"));
+  const storageData = JSON.parse(localStorage.getItem('drawing'));
   storageData.colors.background = 'white';
 
   lc = LC.init(containerOne, {
     snapshot: storageData,
     defaultStrokeWidth: 10,
     strokeWidths: [10, 20, 50],
-    backgroundColor:'white',
+    backgroundColor: 'white',
     secondaryColor: 'transparent',
-
   });
   window.demoLC = lc;
+
+  lc.tool.strokeWidth = 7;
 
   $('#add-img-btn').on('click', function () {
     if (imgObj.src) {
@@ -45,8 +46,6 @@ var showLC = function () {
 
       stage.attrs.width = yodaImg.attrs.width + 150;
       stage.attrs.height = yodaImg.attrs.height + 150;
-
-
 
       const dataUrl = stage.toDataURL();
       const image = new Image();
@@ -60,7 +59,6 @@ var showLC = function () {
       showAnchors();
     }
   });
-
 
   var save = function () {
     localStorage.setItem('drawing', JSON.stringify(lc.getSnapshot()));
@@ -163,19 +161,21 @@ var showLC = function () {
     {
       name: 10,
       el: document.getElementById('sizeTool-1'),
-      size: 10,
+      size: 5,
     },
     {
       name: 20,
       el: document.getElementById('sizeTool-2'),
-      size: 20,
+      size: 5,
     },
     {
       name: 50,
       el: document.getElementById('sizeTool-3'),
-      size: 50,
+      size: 5,
     },
   ];
+
+  //lc.tool.strokeWidth = 2;
 
   colors = [
     {
@@ -266,6 +266,9 @@ $('#show-lc').click(function () {
   }
 });
 
-
-
 // methods
+
+function onChangeToolSize() {
+  const toolSize = +$('#tool-size').val();
+  lc.tool.strokeWidth = toolSize;
+}

@@ -20,7 +20,15 @@
       <div class="paint-container">
         <div class="flex-container">
           <div class="toolset flex-container-column">
-            <div><span class="toolLabel">Tools:</span></div>
+            <div>Tool size<br/>
+
+              <input type="number" min="1" id="tool-size" onchange="onChangeToolSize()" style="width: 50px;" value="7">
+
+            </div>
+
+            <div>
+              <br><span class="toolLabel">Tools:</span></div>
+          
 
             <!-- contain pencil and eraser tool -->
 
@@ -155,6 +163,9 @@
           <div class="fs-container">
             <div class="literally"></div>
           </div>
+
+          
+
 
           <!-- canvas ends here -->
         </div>

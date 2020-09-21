@@ -5,6 +5,9 @@ var colors;
 
 var setCurrentByName;
 var findByName;
+let toolStrokeSize = 7;
+let toolSelectedToolIndex = 2;
+let currentZoomValue = 0.2; // default value
 
 // the only LC-specific thing we have to do
 var containerOne = document.getElementsByClassName('literally')[0];
@@ -26,18 +29,20 @@ function download() {
 
 var showLC = function () {
   const storageData = JSON.parse(localStorage.getItem('drawing'));
-  storageData.colors.background = 'white';
+  // storageData.colors.primary = 'black';
+  // storageData.colors.secondary = 'black';
+  // storageData.colors.background = 'white';
 
   lc = LC.init(containerOne, {
     snapshot: storageData,
-    defaultStrokeWidth: 10,
-    strokeWidths: [10, 20, 50],
+    defaultStrokeWidth: 7,
+    strokeWidths: [1, 3, 7, 10, 20, 30],
     backgroundColor: 'white',
     secondaryColor: 'transparent',
   });
   window.demoLC = lc;
 
-  lc.tool.strokeWidth = 7;
+  resetColor();
 
   $('#add-img-btn').on('click', function () {
     if (imgObj.src) {
@@ -155,23 +160,46 @@ var showLC = function () {
       el: document.getElementById('tool-pan'),
       tool: new LC.tools.Pan(lc),
     },
+    {
+      name: 'tool-eye-dropper',
+      el: document.getElementById('tool-eye-dropper'),
+      tool: new LC.tools.Eyedropper(lc),
+    },
   ];
 
   strokeWidths = [
     {
-      name: 10,
-      el: document.getElementById('sizeTool-1'),
-      size: 5,
+      name: 7,
+      el: document.getElementById('sizeTool-7'),
+      size: 7,
     },
+    {
+      name: 1,
+      el: document.getElementById('sizeTool-1'),
+      size: 1,
+    },
+    {
+      name: 3,
+      el: document.getElementById('sizeTool-3'),
+      size: 3,
+    },
+
+    {
+      name: 10,
+      el: document.getElementById('sizeTool-10'),
+      size: 10,
+    },
+
     {
       name: 20,
-      el: document.getElementById('sizeTool-2'),
-      size: 5,
+      el: document.getElementById('sizeTool-20'),
+      size: 20,
     },
+
     {
-      name: 50,
-      el: document.getElementById('sizeTool-3'),
-      size: 5,
+      name: 30,
+      el: document.getElementById('sizeTool-30'),
+      size: 30,
     },
   ];
 
@@ -266,9 +294,39 @@ $('#show-lc').click(function () {
   }
 });
 
-// methods
+//  color picker
 
-function onChangeToolSize() {
-  const toolSize = +$('#tool-size').val();
-  lc.tool.strokeWidth = toolSize;
-}
+// let's set defaults for all color pickers
+jscolor.presets.default = {
+  height: 181, // make the picker box a little bigger
+  position: 'right', // position the picker to the right of the target
+  previewPosition: 'right', // display color preview on the right side
+  previewSize: 40, // make color preview bigger
+};
+
+const resetColor = () => {
+  lc.setColor('primary', 'rgb(0,0,0)');
+  lc.setColor('secondary', 'rgb(255,255,255)');
+  lc.setColor('background', 'rgb(255,255,255)');
+};
+
+const strokeColorChange = (value) => {
+  lc.setColor('primary', value.toHEXString());
+};
+
+const backgroundColor = (value) => {
+  lc.setColor('background', value.toHEXString());
+};
+
+const fillColor = (value) => {
+  lc.setColor('secondary', value.toHEXString());
+};
+
+const zoomIn = () => {
+  lc.zoom(lc.config.zoomStep);
+  console.log(lc);
+};
+
+const zoomOut = () => {
+  lc.zoom(-lc.config.zoomStep);
+};

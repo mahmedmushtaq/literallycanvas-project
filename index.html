@@ -20,9 +20,54 @@
       <div class="paint-container">
         <div class="flex-container">
           <div class="toolset flex-container-column">
-            <div>Tool size<br/>
+            <div class="tool-size">Tool size<br/>
 
-              <input type="number" min="1" id="tool-size" onchange="onChangeToolSize()" style="width: 50px;" value="7">
+              
+                
+                <div class="square-toolbar-button" id="sizeTool-1">
+                  <!-- size 1 -->
+                  <svg width="26"  height="26" version="1.1" data-reactid=".1.$1.0.0">
+                  
+                      <circle cx="13" cy="13" r="0.5" data-reactid=".1.$1.0.0.0">
+                      </circle>
+                    </svg>
+
+                </div>
+              
+              <div class="square-toolbar-button " id="sizeTool-3">
+                <!-- size 3 -->
+              <svg width="26" height="26" version="1.1" data-reactid=".1.$2.0.0"><circle cx="13" cy="13" r="1" data-reactid=".1.$2.0.0.0"></circle></svg>
+               </div>
+              
+              <div class="square-toolbar-button current" id="sizeTool-7">
+              <!-- size 7 -->
+                <svg width="26" height="26" version="1.1" data-reactid=".1.$5.0.0"><circle cx="13" cy="13" r="2.5" data-reactid=".1.$5.0.0.0"></circle>
+              </svg>
+               </div>
+
+              <div class="square-toolbar-button " id="sizeTool-10">
+                <!-- size 10 -->
+                <svg width="26" height="26" version="1.1" data-reactid=".1.$10.0.0"><circle cx="13" cy="13" r="5" data-reactid=".1.$10.0.0.0"></circle>
+                </svg>
+            </div>
+              
+              
+              <div class="square-toolbar-button " id="sizeTool-20">
+               <!-- size 20 -->
+                <svg width="26" height="26" version="1.1" data-reactid=".1.$20.0.0">
+                  <circle cx="13" cy="13" r="10" data-reactid=".1.$20.0.0.0"></circle>
+                </svg>
+               </div>
+
+               <div class="square-toolbar-button " id="sizeTool-30">
+                 <!--size 30  -->
+                <svg width="26" height="26" version="1.1" data-reactid=".1.$30.0.0">
+                 <circle cx="13" cy="13" r="15" data-reactid=".1.$30.0.0.0">
+
+                 </circle>
+                </svg>
+              </div>
+  
 
             </div>
 
@@ -122,7 +167,7 @@
 
             </div>
 
-            <!-- contain select and save tool -->
+            <!-- contain select and eye-dropper tool -->
 
             <div class="inner-tool-div">
               <br />
@@ -132,15 +177,44 @@
                 <img class="tool-icon" src="./assets/images/select.svg" alt="" />
               </a>
 
-              <a href="javascript:void(0);" class="tool" id="clear-lc">
-                <img class="tool-icon" src="./assets/images/clear.svg" alt="" />
+  
+              <a href="javascript:void(0);" class="tool" id="tool-eye-dropper">
+                <img class="tool-icon" src="./assets/images/eyedropper.svg" alt="" />
+              </a>
+
+
+
+            </div>
+
+            <!-- tool zoom in and out -->
+
+            <div class="inner-tool-div">
+              <br />
+
+
+              <a href="javascript:void(0);" onclick="zoomIn()" class="tool ">
+                <img class="tool-icon" src="./assets/images/zoom-in.svg" alt="" />
+              </a>
+
+              <a href="javascript:void(0);" onclick="zoomOut()" class="tool">
+                <img class="tool-icon" src="./assets/images/zoom-out.svg" alt="" />
               </a>
 
 
             </div>
 
-            <div>
+            <!-- save and clear tool -->
+
+
+            <div class="inner-tool-div">
               <br>
+
+              <a href="javascript:void(0);" class="tool" id="clear-lc">
+                <img class="tool-icon" src="./assets/images/clear.svg" alt="" />
+              </a>
+
+            
+         
 
               <a id="download" download="image.png" style="margin-left: 3px"
               ><button type="button" onClick="download()">
@@ -152,6 +226,32 @@
             ></a>
 
             </div>
+
+            <div>
+              <br>
+              <span>Stroke</span>
+              <br>
+              <input class="stroke-color"  id="color-div" data-jscolor="{}" onChange="strokeColorChange(this.jscolor)"> <br/>
+          
+            
+
+              
+
+              <span>Fill</span>
+              <br>
+              
+                <input class="fill-color" id="color-div" data-jscolor="{}" onChange="fillColor(this.jscolor)"> <br/>
+              
+              
+                <span>Bg</span>
+              <br>
+              <input class="bg-color" id="background-color-div" data-jscolor="{}" onChange="backgroundColor(this.jscolor)"> <br/>
+              
+
+
+            </div>
+
+            
 
 
 
@@ -212,7 +312,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="./assets/js/image-resize.js"></script>
+    <script src="./assets/js/jscolor.js"></script>
     <script src="./statics/lib/js/literallycanvas-core.js"></script>
+
+    
 
     <script src="./assets/js/custom-literally.js" defer></script>
 

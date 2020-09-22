@@ -30,6 +30,7 @@ module.exports = Text = (function(superClass) {
   Text.prototype.iconName = 'text';
 
   function Text() {
+
     this.text = '';
     this.font = 'bold 18px sans-serif';
     this.currentShape = null;

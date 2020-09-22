@@ -22,23 +22,23 @@
           <div class="toolset flex-container-column">
             <div class="tool-size">Tool size<br/>
 
-              
-                
+
+
                 <div class="square-toolbar-button" id="sizeTool-1">
                   <!-- size 1 -->
                   <svg width="26"  height="26" version="1.1" data-reactid=".1.$1.0.0">
-                  
+
                       <circle cx="13" cy="13" r="0.5" data-reactid=".1.$1.0.0.0">
                       </circle>
                     </svg>
 
                 </div>
-              
+
               <div class="square-toolbar-button " id="sizeTool-3">
                 <!-- size 3 -->
               <svg width="26" height="26" version="1.1" data-reactid=".1.$2.0.0"><circle cx="13" cy="13" r="1" data-reactid=".1.$2.0.0.0"></circle></svg>
                </div>
-              
+
               <div class="square-toolbar-button current" id="sizeTool-7">
               <!-- size 7 -->
                 <svg width="26" height="26" version="1.1" data-reactid=".1.$5.0.0"><circle cx="13" cy="13" r="2.5" data-reactid=".1.$5.0.0.0"></circle>
@@ -50,8 +50,8 @@
                 <svg width="26" height="26" version="1.1" data-reactid=".1.$10.0.0"><circle cx="13" cy="13" r="5" data-reactid=".1.$10.0.0.0"></circle>
                 </svg>
             </div>
-              
-              
+
+
               <div class="square-toolbar-button " id="sizeTool-20">
                <!-- size 20 -->
                 <svg width="26" height="26" version="1.1" data-reactid=".1.$20.0.0">
@@ -67,13 +67,13 @@
                  </circle>
                 </svg>
               </div>
-  
+
 
             </div>
 
             <div>
               <br><span class="toolLabel">Tools:</span></div>
-          
+
 
             <!-- contain pencil and eraser tool -->
 
@@ -104,7 +104,7 @@
             <div class="inner-tool-div">
               <br />
               <a href="javascript:void(0);" class="tool" id="tool-text">
-                <img class="tool-icon" src="./assets/images/text.svg" alt="" />
+                <img class="tool-icon"   src="./assets/images/text.svg" alt="" />
               </a>
 
               <a href="javascript:void(0);" class="tool" id="tool-dashed">
@@ -177,7 +177,7 @@
                 <img class="tool-icon" src="./assets/images/select.svg" alt="" />
               </a>
 
-  
+
               <a href="javascript:void(0);" class="tool" id="tool-eye-dropper">
                 <img class="tool-icon" src="./assets/images/eyedropper.svg" alt="" />
               </a>
@@ -213,8 +213,8 @@
                 <img class="tool-icon" src="./assets/images/clear.svg" alt="" />
               </a>
 
-            
-         
+
+
 
               <a id="download" download="image.png" style="margin-left: 3px"
               ><button type="button" onClick="download()">
@@ -232,26 +232,77 @@
               <span>Stroke</span>
               <br>
               <input class="stroke-color"  id="color-div" data-jscolor="{}" onChange="strokeColorChange(this.jscolor)"> <br/>
-          
-            
 
-              
+
+
+
 
               <span>Fill</span>
               <br>
-              
+
                 <input class="fill-color" id="color-div" data-jscolor="{}" onChange="fillColor(this.jscolor)"> <br/>
-              
-              
+
+
                 <span>Bg</span>
               <br>
               <input class="bg-color" id="background-color-div" data-jscolor="{}" onChange="backgroundColor(this.jscolor)"> <br/>
-              
+
 
 
             </div>
 
-            
+            <div id="font-container">
+              <small>First select <br/> font and then <br/> select text tool</small>
+              <br>
+              <br>
+              <span>Choose Font Style</span>
+              <br>
+              <select  id="font-style" >
+                <option value="normal" selected>Normal</option>
+                <option value="bold">Bold</option>
+                <option value="italic">Italic</option>
+
+
+              </select>
+              <br>
+
+              <span>Choose Font Family</span>
+              <br>
+              <select  id="font-family">
+                <option value="arial">Arial</option>
+                <option value="sans-serif" selected>Sans Serif</option>
+                <option value="monospace">Monospace</option>
+
+              </select>
+              <br>
+
+              <span>Choose Font Size</span>
+              <br>
+              <select  id="font-size">
+                <option value="9">9</option>
+                <option value="12">12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+                <option value="26">26</option>
+                <option value="32">32</option>
+                <option value="38" selected>38</option>
+                <option value="42">42</option>
+                <option value="46">46</option>
+                <option value="52">52</option>
+                <option value="55">55</option>
+                <option value="60">60</option>
+
+
+              </select>
+              <br>
+
+
+
+
+            </div>
+
+
 
 
 
@@ -264,7 +315,7 @@
             <div class="literally"></div>
           </div>
 
-          
+
 
 
           <!-- canvas ends here -->
@@ -315,9 +366,9 @@
     <script src="./assets/js/jscolor.js"></script>
     <script src="./statics/lib/js/literallycanvas-core.js"></script>
 
-    
 
-    <script src="./assets/js/custom-literally.js" defer></script>
+
+    <script src="./assets/js/custom-literally.js"  defer></script>
 
 
   </body>

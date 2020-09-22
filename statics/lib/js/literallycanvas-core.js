@@ -165,6 +165,9 @@
                 this.bindToElement(containerEl);
               }
               this.respondToSizeChange = function () {};
+              // here set Fonts
+
+
             }
 
             LiterallyCanvas.prototype.bindToElement = function (containerEl) {
@@ -1094,6 +1097,8 @@
               this.trigger('snapshotLoad');
               return this.trigger('drawingChange', {});
             };
+
+
 
             LiterallyCanvas.prototype.loadSnapshotJSON = function (str) {
               console.warn(
@@ -3597,6 +3602,7 @@
 
           defineShape('Text', {
             constructor: function (args) {
+
               if (args == null) {
                 args = {};
               }
@@ -3628,10 +3634,12 @@
               }
             },
             setText: function (text) {
+
               this.text = text;
               return (this.renderer = null);
             },
             setFont: function (font) {
+              console.log('set Font = ',font);
               this.font = font;
               return (this.renderer = null);
             },
@@ -5426,21 +5434,17 @@
           module.exports = SelectShape = (function (superClass) {
             extend(SelectShape, superClass);
 
-
-
             SelectShape.prototype.name = 'SelectShape';
 
             SelectShape.prototype.usesSimpleAPI = false;
 
             function SelectShape(lc) {
-
               this.selectCanvas = document.createElement('canvas');
               this.selectCanvas.style['background-color'] = 'transparent';
               this.selectCtx = this.selectCanvas.getContext('2d');
             }
 
             SelectShape.prototype.didBecomeActive = function (lc) {
-
               var onDown, onDrag, onUp, selectShapeUnsubscribeFuncs;
               selectShapeUnsubscribeFuncs = [];
               this._selectShapeUnsubscribe = (function (_this) {
@@ -5458,12 +5462,8 @@
                   }
                   return results;
                 };
-
-
-
               })(this);
               onDown = (function (_this) {
-
                 return function (arg) {
                   var br, shapeIndex, x, y;
                   (x = arg.x), (y = arg.y);
@@ -5495,9 +5495,7 @@
                 };
               })(this);
               onDrag = (function (_this) {
-
                 return function (arg) {
-
                   var x, y;
                   (x = arg.x), (y = arg.y);
 
@@ -5673,7 +5671,8 @@
 
             function Text() {
               this.text = '';
-              this.font = 'bold 18px sans-serif';
+
+              this.font = 'bold 38px sans-serif';
               this.currentShape = null;
               this.currentShapeState = null;
               this.initialShapeBoundingRect = null;
@@ -5766,6 +5765,10 @@
             Text.prototype.setText = function (text) {
               return (this.text = text);
             };
+
+            Text.prototype.setFont = function(font){
+              return this.font = font;
+            }
 
             Text.prototype._ensureNotEditing = function (lc) {
               if (this.currentShapeState === 'editing') {
@@ -6013,8 +6016,13 @@
                 return e.stopPropagation();
               });
               onChange = (function (_this) {
+
                 return function (e) {
+
+
                   _this.currentShape.setText(e.target.value);
+                  // _this.currentShape.setFont("38px Arial");
+
                   _this.currentShape.enforceMaxBoundingRect(lc);
                   _this._setShapesInProgress(lc);
                   lc.repaintLayer('main');

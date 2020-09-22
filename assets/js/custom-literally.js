@@ -1,13 +1,11 @@
 var lc = null;
 var tools;
 var strokeWidths;
-var colors;
+
 
 var setCurrentByName;
 var findByName;
-let toolStrokeSize = 7;
-let toolSelectedToolIndex = 2;
-let currentZoomValue = 0.2; // default value
+let defaultFontFamily = "sans-serif", defaultFontSize = 16, defaultFontStyle='normal';
 
 // the only LC-specific thing we have to do
 var containerOne = document.getElementsByClassName('literally')[0];
@@ -29,9 +27,7 @@ function download() {
 
 var showLC = function () {
   const storageData = JSON.parse(localStorage.getItem('drawing'));
-  // storageData.colors.primary = 'black';
-  // storageData.colors.secondary = 'black';
-  // storageData.colors.background = 'white';
+
 
   lc = LC.init(containerOne, {
     snapshot: storageData,
@@ -42,7 +38,13 @@ var showLC = function () {
   });
   window.demoLC = lc;
 
-  resetColor();
+  const canvas = lc.canvas;
+  const ctx = canvas.getContext('2d');
+  ctx.font = '38px Monospace';
+
+ console.log(lc,'5763');
+
+
 
   $('#add-img-btn').on('click', function () {
     if (imgObj.src) {
@@ -205,23 +207,23 @@ var showLC = function () {
 
   //lc.tool.strokeWidth = 2;
 
-  colors = [
-    {
-      name: 'black',
-      el: document.getElementById('colorTool-black'),
-      color: '#000000',
-    },
-    {
-      name: 'blue',
-      el: document.getElementById('colorTool-blue'),
-      color: '#0000ff',
-    },
-    {
-      name: 'red',
-      el: document.getElementById('colorTool-red'),
-      color: '#ff0000',
-    },
-  ];
+  // colors = [
+  //   {
+  //     name: 'black',
+  //     el: document.getElementById('colorTool-black'),
+  //     color: '#000000',
+  //   },
+  //   {
+  //     name: 'blue',
+  //     el: document.getElementById('colorTool-blue'),
+  //     color: '#0000ff',
+  //   },
+  //   {
+  //     name: 'red',
+  //     el: document.getElementById('colorTool-red'),
+  //     color: '#ff0000',
+  //   },
+  // ];
 
   setCurrentByName = function (ary, val) {
     ary.forEach(function (i) {
@@ -262,13 +264,13 @@ var showLC = function () {
   setCurrentByName(strokeWidths, strokeWidths[0].name);
 
   // Wire Colors
-  colors.forEach(function (clr) {
-    $(clr.el).click(function () {
-      lc.setColor('primary', clr.color);
-      setCurrentByName(colors, clr.name);
-    });
-  });
-  setCurrentByName(colors, colors[0].name);
+  // colors.forEach(function (clr) {
+  //   $(clr.el).click(function () {
+  //     lc.setColor('primary', clr.color);
+  //     setCurrentByName(colors, clr.name);
+  //   });
+  // });
+  // setCurrentByName(colors, colors[0].name);
 };
 
 $(document).ready(function () {
@@ -324,9 +326,43 @@ const fillColor = (value) => {
 
 const zoomIn = () => {
   lc.zoom(lc.config.zoomStep);
-  console.log(lc);
+
 };
 
 const zoomOut = () => {
   lc.zoom(-lc.config.zoomStep);
 };
+
+
+
+ $("#tool-text").on("click",function(){
+   setTimeout(()=>{
+     setTextFont()
+   },100)
+ })
+
+const setTextFont = ()=>{
+   if(lc.tool.font) {
+     lc.tool.font = defaultFontStyle + " " + defaultFontSize + "px " + defaultFontFamily;
+     console.log(lc.tool);
+   }
+
+
+}
+
+$("#font-style").on("change",function(e){
+    defaultFontStyle = e.target.value;
+    setTextFont()
+})
+
+$("#font-family").on("change",function(e){
+  defaultFontFamily = e.target.value;
+  setTextFont()
+})
+
+$("#font-size").on("change",function(e){
+  defaultFontSize = e.target.value;
+  setTextFont()
+})
+
+

@@ -2,10 +2,11 @@ var lc = null;
 var tools;
 var strokeWidths;
 
-
 var setCurrentByName;
 var findByName;
-let defaultFontFamily = "sans-serif", defaultFontSize = 16, defaultFontStyle='normal';
+let defaultFontFamily = 'sans-serif',
+  defaultFontSize = 16,
+  defaultFontStyle = 'normal';
 
 // the only LC-specific thing we have to do
 var containerOne = document.getElementsByClassName('literally')[0];
@@ -28,7 +29,6 @@ function download() {
 var showLC = function () {
   const storageData = JSON.parse(localStorage.getItem('drawing'));
 
-
   lc = LC.init(containerOne, {
     snapshot: storageData,
     defaultStrokeWidth: 7,
@@ -41,10 +41,6 @@ var showLC = function () {
   const canvas = lc.canvas;
   const ctx = canvas.getContext('2d');
   ctx.font = '38px Monospace';
-
- console.log(lc,'5763');
-
-
 
   $('#add-img-btn').on('click', function () {
     if (imgObj.src) {
@@ -326,43 +322,94 @@ const fillColor = (value) => {
 
 const zoomIn = () => {
   lc.zoom(lc.config.zoomStep);
-
 };
 
 const zoomOut = () => {
   lc.zoom(-lc.config.zoomStep);
 };
 
+$('#tool-text').on('click', function () {
+  setTimeout(() => {
+    setTextFont();
+  }, 100);
+});
 
+const setTextFont = () => {
+  if (lc.tool.font) {
+    lc.tool.font =
+      defaultFontStyle + ' ' + defaultFontSize + 'px ' + defaultFontFamily;
+    console.log(lc.tool);
+  }
+};
 
- $("#tool-text").on("click",function(){
-   setTimeout(()=>{
-     setTextFont()
-   },100)
- })
+$('#font-style').on('change', function (e) {
+  defaultFontStyle = e.target.value;
+  setTextFont();
+});
 
-const setTextFont = ()=>{
-   if(lc.tool.font) {
-     lc.tool.font = defaultFontStyle + " " + defaultFontSize + "px " + defaultFontFamily;
-     console.log(lc.tool);
-   }
-
-
-}
-
-$("#font-style").on("change",function(e){
-    defaultFontStyle = e.target.value;
-    setTextFont()
-})
-
-$("#font-family").on("change",function(e){
+$('#font-family').on('change', function (e) {
   defaultFontFamily = e.target.value;
-  setTextFont()
-})
+  setTextFont();
+});
 
-$("#font-size").on("change",function(e){
+$('#font-size').on('change', function (e) {
   defaultFontSize = e.target.value;
-  setTextFont()
-})
+  setTextFont();
+});
 
+const deleteButton = document.getElementById('delete-btn');
 
+deleteButton.addEventListener('click', function () {
+  const canvas = lc;
+  const selectedShape = canvas.tool.selectedShape;
+
+  /* Remove shape from shapes list*/
+
+  if (selectedShape) {
+    const selectedShapeIndex = canvas.shapes.indexOf(selectedShape);
+    canvas.shapes.splice(selectedShapeIndex, 1);
+    canvas.setShapesInProgress([]); /* Also removes selection box */
+
+    /* Mimic actions of select tool:
+	https://github.com/literallycanvas/literallycanvas/blob/884fc422604d7cf6e4159fb9415e735ac19bfba3/src/tools/SelectShape.coffee#L59
+	*/
+
+    canvas.trigger('shapeMoved', { shape: selectedShape });
+    canvas.trigger('drawingChange', {});
+
+    /* Clear the selected shape (prevents second click on delete button deleting the shape now at the index of the old selected shape) */
+
+    //--------------------------------- Undo/ReDo Support here ------------------------------------------------------
+    var ss = canvas.tool.selectedShape;
+    var sid = canvas.tool.selectedShape.id;
+    canvas.tool.selectedShape = null;
+    /* Redraw the canvas with the shape now removed */
+    canvas.repaintLayer('main');
+
+    //Custom shapeDeleted event
+    canvas.trigger('shapeDeleted', ss);
+
+    //Add to undo/redo stack
+    canvas.execute({
+      do: function () {
+        //Del shape
+        for (var i = 0; i != canvas.shapes.length; i++) {
+          if (canvas.shapes[i].id == sid) {
+            canvas.shapes.splice(i, 1);
+            break;
+          }
+        }
+        canvas.repaintLayer('main');
+      },
+      undo: function () {
+        //ReAdd shape
+        canvas.shapes.push(ss);
+        canvas.repaintLayer('main');
+      },
+    });
+    //-------------------------------------------------END------------------------------------------------------
+    /* Instantiate a new instance of the select tool so the user can select another shape immediately */
+
+    canvas.setTool(new LC.tools.SelectShape(canvas));
+  }
+});

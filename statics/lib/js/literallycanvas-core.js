@@ -166,8 +166,6 @@
               }
               this.respondToSizeChange = function () {};
               // here set Fonts
-
-
             }
 
             LiterallyCanvas.prototype.bindToElement = function (containerEl) {
@@ -1097,8 +1095,6 @@
               this.trigger('snapshotLoad');
               return this.trigger('drawingChange', {});
             };
-
-
 
             LiterallyCanvas.prototype.loadSnapshotJSON = function (str) {
               console.warn(
@@ -3602,7 +3598,6 @@
 
           defineShape('Text', {
             constructor: function (args) {
-
               if (args == null) {
                 args = {};
               }
@@ -3634,12 +3629,11 @@
               }
             },
             setText: function (text) {
-
               this.text = text;
               return (this.renderer = null);
             },
             setFont: function (font) {
-              console.log('set Font = ',font);
+              console.log('set Font = ', font);
               this.font = font;
               return (this.renderer = null);
             },
@@ -5447,10 +5441,10 @@
             SelectShape.prototype.didBecomeActive = function (lc) {
               var onDown, onDrag, onUp, selectShapeUnsubscribeFuncs;
               selectShapeUnsubscribeFuncs = [];
+
               this._selectShapeUnsubscribe = (function (_this) {
                 return function () {
                   var func, j, len, results;
-
                   results = [];
                   for (
                     j = 0, len = selectShapeUnsubscribeFuncs.length;
@@ -5506,7 +5500,6 @@
                       y: y - _this.dragOffset.y,
                     });
 
-                    console.log();
                     lc.setShapesInProgress([
                       _this.selectedShape,
                       createShape('SelectionBox', {
@@ -5543,6 +5536,7 @@
                     });
                     lc.trigger('drawingChange', {});
                     lc.repaintLayer('main');
+
                     return _this._drawSelectCanvas(lc);
                   }
                 };
@@ -5550,6 +5544,7 @@
               selectShapeUnsubscribeFuncs.push(lc.on('lc-pointerdown', onDown));
               selectShapeUnsubscribeFuncs.push(lc.on('lc-pointerdrag', onDrag));
               selectShapeUnsubscribeFuncs.push(lc.on('lc-pointerup', onUp));
+
               return this._drawSelectCanvas(lc);
             };
 
@@ -5766,9 +5761,9 @@
               return (this.text = text);
             };
 
-            Text.prototype.setFont = function(font){
-              return this.font = font;
-            }
+            Text.prototype.setFont = function (font) {
+              return (this.font = font);
+            };
 
             Text.prototype._ensureNotEditing = function (lc) {
               if (this.currentShapeState === 'editing') {
@@ -6016,10 +6011,7 @@
                 return e.stopPropagation();
               });
               onChange = (function (_this) {
-
                 return function (e) {
-
-
                   _this.currentShape.setText(e.target.value);
                   // _this.currentShape.setFont("38px Arial");
 
